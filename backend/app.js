@@ -1,0 +1,21 @@
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const studentRouter = require('./Router/StudentRouter');
+const cros = require('cors');
+
+
+app.use(bodyParser.json());
+app.use(cros());
+app.use('/student',studentRouter);
+if (app.get("env") === "production") {
+    app.use(enforce.HTTPS({ trustProtoHeader: true }));
+ }
+
+app.listen(5000,()=>{
+    console.log('Server is Listing at port 5000');
+})
+
+app.get('/',(req,res)=>{
+    res.send('hello there!!!');
+})
