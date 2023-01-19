@@ -47,6 +47,10 @@ const studentSchema = mongoose.Schema({
     SPI:{
         type:Number,
         required:true
+    },
+    password:{
+        type:String,
+        required:true
     }
 
 });

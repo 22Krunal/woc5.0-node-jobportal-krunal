@@ -2,12 +2,14 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const studentRouter = require('./Router/StudentRouter');
+const companyRouter = require('./Router/companyRouter');
 const cros = require('cors');
 
 
 app.use(bodyParser.json());
 app.use(cros());
 app.use('/student',studentRouter);
+app.use('/company',companyRouter);
 if (app.get("env") === "production") {
     app.use(enforce.HTTPS({ trustProtoHeader: true }));
  }

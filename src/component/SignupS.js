@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
+import {  useNavigate } from 'react-router-dom'
 const SignupS = () => {
+  const Navigate = useNavigate();
   let sub = async function handleSubmit(e){
     // console.log('hello',document.getElementById('fn').value);
     e.preventDefault();
@@ -13,21 +15,27 @@ const SignupS = () => {
     let address = document.getElementById('address').value;
     let batch = document.getElementById('batch').value;    
     let spi = document.getElementById('spi').value;
-console.log({FirstName,MiddleName,LastName,email,contact,Id,address,batch,spi});
+    let password = document.getElementById('password').value;
+console.log({FirstName,MiddleName,LastName,email,contact,Id,address,batch,spi,password});
 
-            // let resp = await axios.post('/student',{email,password});
-            let url = 'http://localhost:5000/student/signup';
-            const response=await fetch(url,{
-              method:'POST',
-              headers:{
-                 'Content-Type':'application/json'
-              }
-              ,
-              body:JSON.stringify({FirstName,MiddleName,LastName,email,contact,Id,address,batch,spi})
-          })
+  let url = 'http://localhost:5000/student/signup';
+            let resp = await axios.post(url,{FirstName,MiddleName,LastName,email,contact,Id,address,batch,spi,password});
+          //   const response=await fetch(url,{
+          //     method:'POST',
+          //     headers:{
+          //        'Content-Type':'application/json'
+          //     }
+          //     ,
+          //     body:JSON.stringify({FirstName,MiddleName,LastName,email,contact,Id,address,batch,spi,password})
+          // })
             // let resp = await axios.post('https:localhost:5000/student/signup',{FirstName,MiddleName,LastName,email,contact,Id,address,batch,spi});
             // let data = 
             // console.log(resp.data);
+
+            if(resp.data.success){
+              Navigate('/');
+            }
+            
   }
   return (
     <div className="card container my-5" style={{width: "40rem"}}>
@@ -58,6 +66,10 @@ console.log({FirstName,MiddleName,LastName,email,contact,Id,address,batch,spi});
   <div className="form-floating mb-3  ">
     <input type="text" className="form-control" id="contact" placeholder="name@example.com"/>
     <label for="contact">Contact</label>
+  </div>
+  <div className="form-floating mb-3  ">
+    <input type="password" className="form-control" id="password" placeholder="name@example.com"/>
+    <label for="password">Password</label>
   </div>
   <div className="form-floating mb-3  ">
     <input type="email" className="form-control" id="address" placeholder="name@example.com"/>
