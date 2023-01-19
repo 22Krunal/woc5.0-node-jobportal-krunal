@@ -19,7 +19,8 @@ const CompanySchema =  mongoose.Schema({
     },
     Email:{
         type : String,
-        required : true
+        required : true,
+        unique : true
     },
     Password : {
         type : String,
