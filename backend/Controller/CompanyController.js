@@ -12,6 +12,7 @@ module.exports.postCompany = async function postCompany (req,res){
     })
     console.log(resp);
     if(resp){
+        localStorage.setItem('CompanyId',result._id.valueOf());
     res.json({success:true,message:"Successfully Registered"});
     }
     else{
@@ -25,6 +26,7 @@ module.exports.loginCompany = async function loginCompany(req,res){
     // console.log(result,data.password);
     if(result){
         if(result.Password == data.password){
+            localStorage.setItem('CompanyId',result._id.valueOf());
             res.json({success:true,message : "Successfully Logged in"});
         }
         else{
@@ -34,4 +36,10 @@ module.exports.loginCompany = async function loginCompany(req,res){
     else{
         res.json({success:false,message:"Email is not registered"});
     }
+}
+
+module.exports.getAllComapines = async function getAllComapines(req,res){
+    let data = await CompanyModel.find();
+    console.log(data[0]._id.valueOf());
+    res.send("It's working properly");
 }
