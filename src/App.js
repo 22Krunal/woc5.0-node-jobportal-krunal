@@ -6,7 +6,7 @@ import LoginC from "./component/LoginC";
 import SignupC from "./component/SignupC";
 import SignupS from "./component/SignupS";
 import Navbar from "./component/Navbar";
-
+import Job from "./component/Jobs";
 function App() {
   return (
     <div className="App">
@@ -27,7 +27,9 @@ function App() {
     <Routes>
         <Route path="/auth/student" element={<LoginS/>} />
     </Routes>
-
+    <Routes>
+        <Route path="/job" element={<Job/>} />
+    </Routes>
     </Router>
     </div>
   );

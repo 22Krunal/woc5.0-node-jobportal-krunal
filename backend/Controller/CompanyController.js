@@ -43,3 +43,9 @@ module.exports.getAllComapines = async function getAllComapines(req,res){
     console.log(data[0]._id.valueOf());
     res.send("It's working properly");
 }
+
+module.exports.deleteCompany = async function deleteCompany(req,res){
+    let email = req.body.email;
+    let data = await CompanyModel.findOneAndRemove({Email:email});
+    res.json({success:true,message:"Company is Deleted Successfully"});
+}
