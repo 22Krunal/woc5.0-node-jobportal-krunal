@@ -1,7 +1,9 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import axios from 'axios'
 import {  useNavigate } from 'react-router-dom'
+import JobContext from '../context/jobcontext/JobContext'
 const SignupS = () => {
+  const a = useContext(JobContext);
   const Navigate = useNavigate();
   let sub = async function handleSubmit(e){
     // console.log('hello',document.getElementById('fn').value);
@@ -20,19 +22,9 @@ console.log({FirstName,MiddleName,LastName,email,contact,Id,address,batch,spi,pa
 
   let url = 'http://localhost:5000/student/signup';
             let resp = await axios.post(url,{FirstName,MiddleName,LastName,email,contact,Id,address,batch,spi,password});
-          //   const response=await fetch(url,{
-          //     method:'POST',
-          //     headers:{
-          //        'Content-Type':'application/json'
-          //     }
-          //     ,
-          //     body:JSON.stringify({FirstName,MiddleName,LastName,email,contact,Id,address,batch,spi,password})
-          // })
-            // let resp = await axios.post('https:localhost:5000/student/signup',{FirstName,MiddleName,LastName,email,contact,Id,address,batch,spi});
-            // let data = 
-            // console.log(resp.data);
-
             if(resp.data.success){
+              localStorage.setItem('loginS',true);
+              a.handleSubmitS(true);
               Navigate('/');
             }
             

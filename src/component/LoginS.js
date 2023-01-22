@@ -1,7 +1,9 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import axios from 'axios';
-import { Navigate, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
+import JobContext from '../context/jobcontext/JobContext';
 const LoginS = () => {
+  const a = useContext(JobContext);
   const navigate = useNavigate();
 
 
@@ -13,6 +15,8 @@ const LoginS = () => {
     let response = await axios.post(url,{email,password});
     // const data = await response.json();
     if(response.data.success){
+      localStorage.setItem('loginS',true);
+      a.handleSubmitS(true);
       navigate('/');
     }
     console.log(response.data.success);

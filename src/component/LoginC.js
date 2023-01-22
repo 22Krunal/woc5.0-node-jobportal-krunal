@@ -1,7 +1,9 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import JobContext from '../context/jobcontext/JobContext';
 const LoginC = () => {
+  const a = useContext(JobContext);
   const navigate = useNavigate();
   const submit = async function (e){
     e.preventDefault();
@@ -11,6 +13,8 @@ const LoginC = () => {
     const url = 'http://localhost:5000/company/login'
     let response = await axios.post(url,{email,password});
     if(response.data.success){
+      localStorage.setItem('loginC',true);
+      a.handleSubmitC(true);
       navigate('/');
     }
     else{
