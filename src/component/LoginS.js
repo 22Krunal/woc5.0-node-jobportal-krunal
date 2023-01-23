@@ -9,8 +9,8 @@ const LoginS = () => {
 
   let handleLogin = async function login(e){
     e.preventDefault();
-    let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
+    let Email = document.getElementById('email').value;
+    let Password = document.getElementById('password').value;
     let url = 'http://localhost:5000/student/login';
     let response = await axios.post(url,{Email,Password});
     // const data = await response.json();

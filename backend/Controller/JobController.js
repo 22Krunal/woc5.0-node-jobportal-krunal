@@ -9,7 +9,7 @@ module.exports.postJob = async function postJob(req,res){
         Vacancy :  data.Vacancy,
         Criteria : data.Criteria,
         Description : data.Description,
-        CompanyId : data.CompanyId,
+        CompanyId : req.user.id,
         Package : data.Package,
         Position : data.Position
     })

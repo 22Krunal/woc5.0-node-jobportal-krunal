@@ -14,9 +14,9 @@ const JobSchema = mongoose.Schema({
         required : true
     },
     CompanyId:{
-        type : String,
-        required : true
-    },
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'ComapanyModel'
+     },
     Package:{
         type : Number,
         required : true

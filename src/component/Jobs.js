@@ -6,7 +6,7 @@ const Jobs = () => {
     async function getJobs(){
         let url = 'http://localhost:5000/job';
         let resp = await axios.get(url);
-        console.log(resp.data.resp);
+        // console.log(resp.data.resp);
         setdata(resp.data.resp);        
     }
     // console.log(data.data.resp);

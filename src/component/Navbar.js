@@ -1,4 +1,4 @@
-import React, { useState ,useEffect,useContext} from 'react'
+import React, { useEffect,useContext} from 'react'
 // import { Link } from 'react-router-dom'
 import {  Link, useNavigate } from 'react-router-dom'
 import JobContext from '../context/jobcontext/JobContext';
@@ -16,7 +16,7 @@ const Navbar = () => {
   // setLogin(false);
   navigate('/');
 } 
-useEffect((()=>{console.log(a.Login)}),[a.LoginS,a.LoginC]);
+useEffect((()=>{}),[a.LoginS,a.LoginC]);
   return (
     <div> 
        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">

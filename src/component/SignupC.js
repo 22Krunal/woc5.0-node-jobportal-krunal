@@ -6,17 +6,18 @@ const SignupC = () => {
   const a = useContext(JobContext);
   const navigate = useNavigate();
   let sub = async function handleSubmit(e){
+    console.log('hello what is happening')
     e.preventDefault();
       let Name = document.getElementById('Name').value;
       let Address = document.getElementById('address').value;
-      let Vacancy = document.getElementById('vacancy').value;
-      let Criteria = document.getElementById('criteria').value;
       let Email = document.getElementById('email').value;
       let Password = document.getElementById('password').value;
       
       const url = 'http://localhost:5000/company/signup';
-      let response = await axios.post(url,{Name,Address,Vacancy,Criteria,Email,Password});
+      let response = await axios.post(url,{Name,Address,Email,Password});
       if(response.data.success){
+        console.log(response.data.authtoken);
+        localStorage.setItem('token',response.data.authtoken);
         localStorage.setItem('loginC',true);
         a.handleSubmitC(true);
         navigate('/');
@@ -45,14 +46,6 @@ const SignupC = () => {
   <div className="form-floating mb-3  ">
     <input type="email" className="form-control" id="address" placeholder="name@example.com"/>
     <label for="address">Address</label>
-  </div>
-  <div className="form-floating mb-3  ">
-    <input type="number" className="form-control" id="vacancy" placeholder="name@example.com"/>
-    <label for="vacancy">Vacancy</label>
-  </div>
-  <div className="form-floating ">
-    <input type="number" className="form-control" id="criteria" min='0' max='10'placeholder="Password"/>
-    <label for="criteria">Criteria</label>
   </div>
   <button className='btn btn-info my-2' onClick={sub}>Submit</button>
   </div>

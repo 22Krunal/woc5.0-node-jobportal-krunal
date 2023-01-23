@@ -18,10 +18,10 @@ const SignupS = () => {
     let Batch = document.getElementById('batch').value;    
     let Spi = document.getElementById('spi').value;
     let Password = document.getElementById('password').value;
-console.log({FirstName,MiddleName,LastName,email,contact,Id,address,batch,spi,password});
+console.log({FirstName,MiddleName,LastName,Email,Contact,Id,Address,Batch,Spi,Password});
 
   let url = 'http://localhost:5000/student/signup';
-            let resp = await axios.post(url,{FirstName,MiddleName,LastName,Email,Contact,Id,Address,Batch,Spi,password});
+            let resp = await axios.post(url,{FirstName,MiddleName,LastName,Email,Contact,Id,Address,Batch,Spi,Password});
             if(resp.data.success){
               localStorage.setItem('loginS',true);
               a.handleSubmitS(true);

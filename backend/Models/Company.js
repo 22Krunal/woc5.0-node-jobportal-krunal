@@ -9,14 +9,6 @@ const CompanySchema =  mongoose.Schema({
         type : String,
         required : true
     },
-    Vacancy:{
-        type : Number,
-        required : true
-    },
-    Criteria:{
-        type : Number,
-        required : true
-    },
     Email:{
         type : String,
         required : true,
