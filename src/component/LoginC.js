@@ -7,11 +7,11 @@ const LoginC = () => {
   const navigate = useNavigate();
   const submit = async function (e){
     e.preventDefault();
-    let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
+    let Email = document.getElementById('email').value;
+    let Password = document.getElementById('password').value;
     
     const url = 'http://localhost:5000/company/login'
-    let response = await axios.post(url,{email,password});
+    let response = await axios.post(url,{Email,Password});
     if(response.data.success){
       localStorage.setItem('loginC',true);
       a.handleSubmitC(true);

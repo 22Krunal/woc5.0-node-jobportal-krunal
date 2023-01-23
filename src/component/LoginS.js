@@ -12,7 +12,7 @@ const LoginS = () => {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
     let url = 'http://localhost:5000/student/login';
-    let response = await axios.post(url,{email,password});
+    let response = await axios.post(url,{Email,Password});
     // const data = await response.json();
     if(response.data.success){
       localStorage.setItem('loginS',true);

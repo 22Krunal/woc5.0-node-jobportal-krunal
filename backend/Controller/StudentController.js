@@ -1,4 +1,5 @@
 const StudentModel = require('../Models/Student');
+const bcrypt = require('bcrypt');
 
 module.exports.getStudents = async function getStudents(req,res){
     let data = await StudentModel.find();
@@ -14,12 +15,12 @@ module.exports.postStudent = async function postStudent(req,res){
         MiddleName:pdata.MiddleName,
         LastName:pdata.LastName,
         Id:pdata.Id,
-        Contact:pdata.contact,
-        Address:pdata.address,
-        Batch:pdata.batch,
-        SPI:pdata.spi,
-        email : pdata.email,
-        password : pdata.password
+        Contact:pdata.Contact,
+        Address:pdata.Address,
+        Batch:pdata.Batch,
+        SPI:pdata.Spi,
+        email : pdata.Email,
+        password : pdata.Password
         // {,MiddleName,LastName,email,contact,Id,address,batch,spi}
     })
     // console.log(data);
@@ -35,15 +36,16 @@ module.exports.postStudent = async function postStudent(req,res){
 
 module.exports.deleteStudent = async function deleteStudent (req,res){
     let data = req.body;
-    let result = await StudentModel.findOneAndRemove({email:data.email});
+    let result = await StudentModel.findOneAndRemove({email:data.Email});
     res.json({result,message:"User deleted successfully!!!"});
 }
 
 module.exports.loginStudent = async function loginStudent (req,res){
     let data = req.body;
-    let result = await StudentModel.findOne({email:data.email});
+    let result = await StudentModel.findOne({email:data.Email});
     if(result){
-        if(result.password == data.password){
+        const flag = await bcrypt.compare(data.Password,result.password);
+        if(flag){
             res.json({success:true,message : "Successfully Logged in"});
         }
         else{

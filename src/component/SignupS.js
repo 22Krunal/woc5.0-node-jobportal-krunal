@@ -11,17 +11,17 @@ const SignupS = () => {
     let FirstName = document.getElementById('FirstName').value;
     let LastName = document.getElementById('LastName').value;
     let MiddleName = document.getElementById('MiddleName').value;
-    let email = document.getElementById('email').value;
-    let contact = document.getElementById('contact').value;
+    let Email = document.getElementById('email').value;
+    let Contact = document.getElementById('contact').value;
     let Id = document.getElementById('Id').value;
-    let address = document.getElementById('address').value;
-    let batch = document.getElementById('batch').value;    
-    let spi = document.getElementById('spi').value;
-    let password = document.getElementById('password').value;
+    let Address = document.getElementById('address').value;
+    let Batch = document.getElementById('batch').value;    
+    let Spi = document.getElementById('spi').value;
+    let Password = document.getElementById('password').value;
 console.log({FirstName,MiddleName,LastName,email,contact,Id,address,batch,spi,password});
 
   let url = 'http://localhost:5000/student/signup';
-            let resp = await axios.post(url,{FirstName,MiddleName,LastName,email,contact,Id,address,batch,spi,password});
+            let resp = await axios.post(url,{FirstName,MiddleName,LastName,Email,Contact,Id,Address,Batch,Spi,password});
             if(resp.data.success){
               localStorage.setItem('loginS',true);
               a.handleSubmitS(true);

@@ -1,4 +1,6 @@
 const CompanyModel = require('../Models/Company');
+const bcrypt = require('bcrypt');
+
 
 module.exports.postCompany = async function postCompany (req,res){
     let data = req.body;
@@ -12,8 +14,8 @@ module.exports.postCompany = async function postCompany (req,res){
     })
     console.log(resp);
     if(resp){
-        localStorage.setItem('CompanyId',result._id.valueOf());
-    res.json({success:true,message:"Successfully Registered"});
+        // localStorage.setItem('CompanyId',result._id.valueOf());
+    res.json({success:true,message:"Successfully Registered",resp});
     }
     else{
         res.json({success:false,message:"Email is already Registered"}); 
@@ -22,10 +24,11 @@ module.exports.postCompany = async function postCompany (req,res){
 
 module.exports.loginCompany = async function loginCompany(req,res){
     let data = req.body;
-    let result = await CompanyModel.findOne({email:data.email});
-    // console.log(result,data.password);
+    let result = await CompanyModel.findOne({Email:data.Email});
+    // console.log(result.Password,data.password);
     if(result){
-        if(result.Password == data.password){
+    const passwordCompare= await bcrypt.compare(data.Password,result.Password);
+        if(passwordCompare){
             // localStorage.setItem('CompanyId',result._id.valueOf());
             res.json({success:true,message : "Successfully Logged in"});
         }
@@ -40,12 +43,12 @@ module.exports.loginCompany = async function loginCompany(req,res){
 
 module.exports.getAllComapines = async function getAllComapines(req,res){
     let data = await CompanyModel.find();
-    console.log(data[0]);
+    console.log(data);
     res.send("It's working properly");
 }
 
 module.exports.deleteCompany = async function deleteCompany(req,res){
-    let email = req.body.email;
-    let data = await CompanyModel.findOneAndRemove({Email:email});
+    let email = req.body.Email;
+    let data = await CompanyModel.findOneAndRemove({Email:Email});
     res.json({success:true,message:"Company is Deleted Successfully"});
 }
