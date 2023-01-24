@@ -4,10 +4,14 @@ import Job from './Job';
 const Jobs = () => {
     const [data, setdata] = useState([]);
     async function getJobs(){
+      let token = localStorage.getItem('token');
         let url = 'http://localhost:5000/job';
-        let resp = await axios.get(url);
-        // console.log(resp.data.resp);
-        setdata(resp.data.resp);        
+        let resp = await axios.get(url,{headers:{
+          'Content-Type':'application/json',
+          'auth-token':token,
+        }});
+        // console.log(resp.data.data);
+        setdata(resp.data.data);        
     }
     // console.log(data.data.resp);
     useEffect(()=>{
@@ -15,7 +19,7 @@ const Jobs = () => {
     },[])
   return (
     <div>
-        {true?data.map((value,idx)=>{    
+        {data?data.map((value,idx)=>{    
        return <Job data = {value} key={idx}/>
     }):<>hello</>}
     </div>

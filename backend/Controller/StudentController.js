@@ -1,11 +1,22 @@
 const StudentModel = require('../Models/Student');
 const bcrypt = require('bcrypt');
+const {authtokenfun} = require('../middleware/token');
 
 module.exports.getStudents = async function getStudents(req,res){
     let data = await StudentModel.find();
     console.log(data);
     res.send('hello students');
     res.end();
+}
+module.exports.getStudent = async function getStudent(req,res){
+    let data = await StudentModel.findById(req.use.id);
+    console.log(data);
+    if(data){
+        res.json({success:true,data});
+    }
+    else{
+        res.json({success:false});
+    }
 }
 module.exports.postStudent = async function postStudent(req,res){
     let pdata = req.body
@@ -24,8 +35,15 @@ module.exports.postStudent = async function postStudent(req,res){
         // {,MiddleName,LastName,email,contact,Id,address,batch,spi}
     })
     // console.log(data);
+    const dataP = {
+        user : {
+            id : data.id
+        }
+    }
+    const authtoken = authtokenfun(dataP);
+
     if(data){
-        res.json({success:true,message:"Student is Registered Successfully!!"})
+        res.json({success:true,message:"Student is Registered Successfully!!",authtoken});
     }
     else{
         res.json({success:false,message:"Student is Registered Successfully!!"})     
@@ -46,7 +64,8 @@ module.exports.loginStudent = async function loginStudent (req,res){
     if(result){
         const flag = await bcrypt.compare(data.Password,result.password);
         if(flag){
-            res.json({success:true,message : "Successfully Logged in"});
+            const authtoken = authtokenfun(result);
+            res.json({success:true,message : "Successfully Logged in",authtoken});
         }
         else{
             res.json({success:false,message : "Password dosen't match"});

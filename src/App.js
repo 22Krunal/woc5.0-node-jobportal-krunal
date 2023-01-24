@@ -7,16 +7,12 @@ import SignupC from "./component/SignupC";
 import SignupS from "./component/SignupS";
 import Navbar from "./component/Navbar";
 import Job from "./component/Jobs";
-import { useState} from "react";
 import JobState from "./context/jobcontext/JobState";
 import PostJob from "./component/PostJob";
+import Profile from "./component/Profile";
 
 function App() {
-    let login = localStorage.getItem('login')
-    const [Login, setLogin] = useState(login)
-    function handleSubmit (value){
-        setLogin(value);
-    }
+    
   return (
     <div className="App">
     <JobState>
@@ -42,6 +38,9 @@ function App() {
     </Routes>
     <Routes>
         <Route path="/postjob" element={<PostJob/>} />
+    </Routes>
+    <Routes>
+        <Route path="/Profile" element={<Profile/>} />
     </Routes>
     </Router>
     </JobState>

@@ -13,8 +13,7 @@ const LoginC = () => {
     const url = 'http://localhost:5000/company/login'
     let response = await axios.post(url,{Email,Password});
     if(response.data.success){
-      localStorage.setItem('loginC',true);
-      a.handleSubmitC(true);
+      a.handleSubmitC(true,response.data.authtoken);
       navigate('/');
     }
     else{

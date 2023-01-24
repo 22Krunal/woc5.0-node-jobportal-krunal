@@ -1,9 +1,9 @@
 const express = require('express');
-const {getJobs,postJob,deleteJob} = require('../Controller/JobController');
+const {getJob,postJob,deleteJob} = require('../Controller/JobController');
 const JobRouter = express.Router();
 const fetchuser = require('../middleware/fetchuser');
 JobRouter.route('')
-.get(getJobs)
+.get(fetchuser,getJob)
 .post(fetchuser,postJob)
 .delete(deleteJob);
 

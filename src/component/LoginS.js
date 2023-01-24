@@ -15,8 +15,7 @@ const LoginS = () => {
     let response = await axios.post(url,{Email,Password});
     // const data = await response.json();
     if(response.data.success){
-      localStorage.setItem('loginS',true);
-      a.handleSubmitS(true);
+      a.handleSubmitS(true,response.data.authtoken);
       navigate('/');
     }
     console.log(response.data.success);

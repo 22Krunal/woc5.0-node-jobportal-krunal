@@ -4,7 +4,8 @@ module.exports.postJob = async function postJob(req,res){
     let data = req.body;
 
     // let CompanyId = localStorage.getItem('CompanyId');
-    if(1){
+    console.log(data);
+    if(req.user.id){
     let resp = await JobModel.create({
         Vacancy :  data.Vacancy,
         Criteria : data.Criteria,
@@ -22,8 +23,8 @@ else{
 
 module.exports.getJob = async function getJob(req,res){
     // let CompanyId = localStorage.getItem('CompanyId');
-    if(1){
-        let data = await JobModel.find({CompanyId:req.body.CompanyId});
+    if(req.user.id){
+        let data = await JobModel.find({CompanyId:req.user.id});
         res.send({success:true,data});
     }
     else{

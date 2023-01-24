@@ -9,14 +9,12 @@ const Navbar = () => {
   let navigate = useNavigate();
   // const [Login, setLogin] = useState(login);
   let sub = ()=>{
-    a.handleSubmitS(false);
-    a.handleSubmitC(false);
-  localStorage.setItem('loginS',false);
-  localStorage.setItem('loginC',false);
+    a.handleSubmitS(false,'');
+    a.handleSubmitC(false,'');
   // setLogin(false);
   navigate('/');
 } 
-useEffect((()=>{}),[a.LoginS,a.LoginC]);
+useEffect((()=>{}),[]);
   return (
     <div> 
        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -30,22 +28,35 @@ useEffect((()=>{}),[a.LoginS,a.LoginC]);
         <li className="nav-item">
           <Link className="navbar-brand" to="/">Home</Link>
         </li>
-        {!(a.LoginS||a.LoginC)?<li className="nav-item">
-          <Link className="navbar-brand" to="/Job">Job</Link>
-        </li>:
+        {!(a.LoginS)?<></>:
         <>
         <li className="nav-item">
           <Link className="navbar-brand" to="/Job">Jobs</Link>
         </li>
         <li className="nav-item">
-          <Link className="navbar-brand" to="/PostJob">Post Job</Link>
+          <Link className="navbar-brand" to="/Profile">Profile</Link>
         </li>
         <li className="nav-item">
           <button className='btn btn-outline-primary' onClick={sub}>LogOut</button>
         </li>
         </>
         }
-        
+        {!(a.LoginC)?<></>:
+      <>
+      <li className="nav-item">
+        <Link className="navbar-brand" to="/PostJob">Post Job</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="navbar-brand" to="/Profile">Profile</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="navbar-brand" to="/Job">Jobs</Link>
+      </li>
+      <li className="nav-item">
+        <button className='btn btn-outline-primary' onClick={sub}>LogOut</button>
+      </li>
+      </>
+      }
 </ul>
 </div>
   </div>

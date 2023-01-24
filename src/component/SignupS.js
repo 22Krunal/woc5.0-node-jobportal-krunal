@@ -21,10 +21,9 @@ const SignupS = () => {
 console.log({FirstName,MiddleName,LastName,Email,Contact,Id,Address,Batch,Spi,Password});
 
   let url = 'http://localhost:5000/student/signup';
-            let resp = await axios.post(url,{FirstName,MiddleName,LastName,Email,Contact,Id,Address,Batch,Spi,Password});
-            if(resp.data.success){
-              localStorage.setItem('loginS',true);
-              a.handleSubmitS(true);
+            let response = await axios.post(url,{FirstName,MiddleName,LastName,Email,Contact,Id,Address,Batch,Spi,Password});
+            if(response.data.success){
+              a.handleSubmitS(true,response.data.authtoken);
               Navigate('/');
             }
             

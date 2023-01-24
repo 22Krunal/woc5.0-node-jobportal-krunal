@@ -16,10 +16,7 @@ const SignupC = () => {
       const url = 'http://localhost:5000/company/signup';
       let response = await axios.post(url,{Name,Address,Email,Password});
       if(response.data.success){
-        console.log(response.data.authtoken);
-        localStorage.setItem('token',response.data.authtoken);
-        localStorage.setItem('loginC',true);
-        a.handleSubmitC(true);
+        a.handleSubmitC(true,response.data.authtoken);
         navigate('/');
       }
       else{

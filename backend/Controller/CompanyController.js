@@ -1,7 +1,6 @@
 const CompanyModel = require('../Models/Company');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const JWT_SECRET="Krunaliscoolb$oy ";
+const { authtokenfun } = require('../middleware/token');
 
 module.exports.postCompany = async function postCompany (req,res){
     let data = req.body;
@@ -17,7 +16,7 @@ module.exports.postCompany = async function postCompany (req,res){
             id:resp.id
         }
     }
-  const authtoken=  jwt.sign(dataP,JWT_SECRET);
+    const authtoken =  authtokenfun(dataP);
 
     if(resp){
         // localStorage.setItem('CompanyId',result._id.valueOf());
@@ -35,8 +34,10 @@ module.exports.loginCompany = async function loginCompany(req,res){
     if(result){
     const passwordCompare= await bcrypt.compare(data.Password,result.Password);
         if(passwordCompare){
+            const authtoken =  authtokenfun(result);
+
             // localStorage.setItem('CompanyId',result._id.valueOf());
-            res.json({success:true,message : "Successfully Logged in"});
+            res.json({success:true,message : "Successfully Logged in",authtoken});
         }
         else{
             res.json({success:false,message : "Password dosen't match"});
@@ -52,7 +53,14 @@ module.exports.getAllComapines = async function getAllComapines(req,res){
     console.log(data);
     res.send("It's working properly");
 }
+module.exports.getMyCompany = async function getMyCompany(req,res){
+    let user = req.user.id
+    console.log(user);
+    let data = await CompanyModel.findById(user);
+    console.log(data);
+    res.json({success:true,data});
 
+}
 module.exports.deleteCompany = async function deleteCompany(req,res){
     let email = req.body.Email;
     let data = await CompanyModel.findOneAndRemove({Email:Email});
