@@ -9,15 +9,18 @@ import Navbar from "./component/Navbar";
 import Job from "./component/Jobs";
 import JobState from "./context/jobcontext/JobState";
 import PostJob from "./component/PostJob";
-import Profile from "./component/Profile";
+import ProfileC from "./component/ProfileC";
+import ProfileS from "./component/ProfileS";
+import Alert from "./component/Alert";
 
 function App() {
-    
+
   return (
-    <div className="App">
     <JobState>
+    <div className="App">
     <Router>
     <Navbar/>
+    <Alert/>
     <Routes>
         <Route path="/" element={<HomeScreen/>} />
     </Routes>
@@ -40,11 +43,14 @@ function App() {
         <Route path="/postjob" element={<PostJob/>} />
     </Routes>
     <Routes>
-        <Route path="/Profile" element={<Profile/>} />
+        <Route path="/company/Profile" element={<ProfileC/>} />
+    </Routes>
+    <Routes>
+        <Route path="/student/Profile" element={<ProfileS/>} />
     </Routes>
     </Router>
-    </JobState>
     </div>
+    </JobState>
   );
 }
 

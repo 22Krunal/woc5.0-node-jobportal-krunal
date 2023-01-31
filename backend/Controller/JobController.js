@@ -24,8 +24,8 @@ else{
 module.exports.getJob = async function getJob(req,res){
     // let CompanyId = localStorage.getItem('CompanyId');
     if(req.user.id){
-        let data = await JobModel.find({CompanyId:req.user.id});
-        res.send({success:true,data});
+        let resp = await JobModel.find({CompanyId:req.user.id});
+        res.send({success:true,resp});
     }
     else{
         res.json({success:false,message:"Login first"});
@@ -43,7 +43,24 @@ module.exports.getJobs = async function getJobs(req,res){
 }
 
 module.exports.deleteJob = async function deleteJob(req,res){
-    let CompanyId = req.body.CompanyId;
-    let data = await JobModel.findOneAndRemove({CompanyId:CompanyId});
-    res.send({success:true,message:"Successfully Deleted"});
+    let CompanyId = req.user.id;
+    try{
+        console.log(req.params.id);
+    let data = await JobModel.findById(req.params.id);
+    if(!data){
+        res.status(404).json("Not Found");
+    }
+    else{
+        if(data.CompanyId.toString()==req.user.id){
+            let resp = await JobModel.findByIdAndDelete(req.params.id);
+            res.status(200).json({success:true,message:"Successfully Deleted"});
+        }
+        else{
+            res.status(401).json({success:false,message:"Can't Perform this action"});
+        }
+    }
+}
+    catch(error){
+        res.status(500).json("Internal Server Error");
+    }
 }

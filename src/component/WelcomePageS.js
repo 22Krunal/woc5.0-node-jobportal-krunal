@@ -14,7 +14,7 @@ const WelcomePageS = () => {
     navigate('/student/signup');
   }
   return (
-    <div className="d-flex d-grid gap-5 col-6 mx-auto  container  mydiv border-dark justify-content-center flex-column">
+    <div className="d-flex d-grid  col-6 mx-auto  container  mydiv border-dark justify-content-center flex-column">
       <h1 className='text-center'>For <strong className="text-info">Students</strong></h1>
       <div className="text-center">
       <button className="col-4 btn btn-outline-info text-center" onClick={handelLogin}>Login</button>

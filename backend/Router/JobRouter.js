@@ -5,6 +5,8 @@ const fetchuser = require('../middleware/fetchuser');
 JobRouter.route('')
 .get(fetchuser,getJob)
 .post(fetchuser,postJob)
-.delete(deleteJob);
+
+JobRouter.route('/:id')
+.delete(fetchuser,deleteJob);
 
 module.exports = JobRouter;

@@ -3,7 +3,7 @@ import axios from 'axios';
 import {  useNavigate } from 'react-router-dom';
 import JobContext from '../context/jobcontext/JobContext';
 const LoginS = () => {
-  const a = useContext(JobContext);
+  const {handleSubmitS,showAlert} = useContext(JobContext);
   const navigate = useNavigate();
 
 
@@ -12,13 +12,19 @@ const LoginS = () => {
     let Email = document.getElementById('email').value;
     let Password = document.getElementById('password').value;
     let url = 'http://localhost:5000/student/login';
-    let response = await axios.post(url,{Email,Password});
-    // const data = await response.json();
-    if(response.data.success){
-      a.handleSubmitS(true,response.data.authtoken);
+    let response = await axios.post(url,{Email,Password})
+    .then((response)=>{
+      if(response.data.success){
+      // console.log(response.data.authtoken);
+      handleSubmitS('true',response.data.authtoken);
+      showAlert('Successfully Logged In','success');
       navigate('/');
-    }
-    console.log(response.data.success);
+    }})
+    .catch((err)=>{
+        showAlert(err.response.data.message,'danger');
+        console.log('error');
+    });
+    
   }
   return (
     <div className="card container my-5" style={{width: "25rem"}}>

@@ -1,10 +1,11 @@
 import React from 'react'
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 
 
 
 const PostJob = () => {
+  const navigate = useNavigate();
   const sub = async function(e){
     e.preventDefault();
     let token = localStorage.getItem('token');
@@ -15,22 +16,13 @@ const PostJob = () => {
     const Package = document.getElementById('Package').value;
     const Position = document.getElementById('Position').value;
     console.log({Description,Vacancy,Criteria,Package,Position});
-    // const response = await axios({
-    //   method: 'post',
-    //   url: url,
-    //   {Description,Vacancy,Criteria,Package,Position},{
-    //   headers:{
-    //     'Content-Type':'application/json',
-    //     'auth-token':token,
-    //     // 'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEzNTlkY2VkNTYyYzI2MGEyYjFmMGU5In0sImlhdCI6MTYzMDkwMzc5M30.w-LD5IglJ8kVyCt7T-b7d6UmEMTbt0LkBgv_sjz2KZI',
-    //   }
-    // });
     const response = await axios.post(url,{Description,Vacancy,Criteria,Package,Position},{headers:{
       'Content-Type':'application/json',
       'auth-token':token,
     }});
     if(response){
       console.log("great");
+      navigate('/Job');
     }
   };
   return (
