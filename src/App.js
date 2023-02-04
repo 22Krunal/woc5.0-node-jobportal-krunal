@@ -12,13 +12,14 @@ import PostJob from "./component/PostJob";
 import ProfileC from "./component/ProfileC";
 import ProfileS from "./component/ProfileS";
 import Alert from "./component/Alert";
+import Recruitment from "./component/Recruitment";
 
 function App() {
 
   return (
+    <Router>
     <JobState>
     <div className="App">
-    <Router>
     <Navbar/>
     <Alert/>
     <Routes>
@@ -48,9 +49,12 @@ function App() {
     <Routes>
         <Route path="/student/Profile" element={<ProfileS/>} />
     </Routes>
-    </Router>
+    <Routes>
+        <Route path="/myJobs" element={<Recruitment/>} />
+    </Routes>
     </div>
     </JobState>
+    </Router>
   );
 }
 

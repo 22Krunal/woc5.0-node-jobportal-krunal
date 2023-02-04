@@ -17,6 +17,6 @@ companyRouter.route('')
 
 companyRouter.route('/:id')
 .delete(deleteCompany)
-.patch(updateCompany);
+.put(updateCompany);
 
 module.exports = companyRouter;

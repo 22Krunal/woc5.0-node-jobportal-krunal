@@ -22,7 +22,7 @@ const PostJob = () => {
     }});
     if(response){
       console.log("great");
-      navigate('/Job');
+      navigate('/myJobs');
     }
   };
   return (

@@ -1,12 +1,15 @@
 const express = require('express');
-const {getJob,postJob,deleteJob} = require('../Controller/JobController');
+const {getJobs,postJob,deleteJob,getMyJobs} = require('../Controller/JobController');
 const JobRouter = express.Router();
 const fetchuser = require('../middleware/fetchuser');
 JobRouter.route('')
-.get(fetchuser,getJob)
+.get(fetchuser,getJobs)
 .post(fetchuser,postJob)
 
+JobRouter.route('/myjobs')
+.get(fetchuser,getMyJobs);
+
 JobRouter.route('/:id')
-.delete(fetchuser,deleteJob);
+.delete(fetchuser,deleteJob)
 
 module.exports = JobRouter;

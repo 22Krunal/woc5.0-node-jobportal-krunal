@@ -55,7 +55,7 @@ useEffect((()=>{
         <Link className="navbar-brand" to="/PostJob">Post Job</Link>
       </li>
       <li className="nav-item">
-        <Link className="navbar-brand" to="/Job">Jobs</Link>
+        <Link className="navbar-brand" to="/myJobs">Recuritment</Link>
       </li>
       <li className="nav-item">
         <Link className="navbar-brand" to="/company/Profile">Profile</Link>

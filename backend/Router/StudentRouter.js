@@ -1,6 +1,6 @@
 const express = require('express');
 // const StudentModel = require('../Models/Student');
-const {getStudent,postStudent,deleteStudent,loginStudent} = require('../Controller/StudentController');
+const {getStudent,postStudent,deleteStudent,loginStudent,updateStudent} = require('../Controller/StudentController');
 const fetchuser = require('../middleware/fetchuser');
 const studentRouter = express.Router();
 const {encryption} = require('../middleware/hasing');
@@ -14,4 +14,8 @@ studentRouter.route('/signup')
 
 studentRouter.route('/login')
 .post(loginStudent);       // login student
+
+studentRouter.route('/:id')
+.put(updateStudent)           // update student
+.delete(fetchuser,deleteStudent);       // Delete student 
 module.exports = studentRouter;

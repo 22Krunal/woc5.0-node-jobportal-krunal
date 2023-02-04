@@ -1,16 +1,17 @@
 const JobModel = require('../Models/Job');
+const StudentModel = require('../Models/Student');
 
 module.exports.postJob = async function postJob(req,res){
     let data = req.body;
-
+    let id = req.user.id;
     // let CompanyId = localStorage.getItem('CompanyId');
     console.log(data);
-    if(req.user.id){
+    if(id){
     let resp = await JobModel.create({
         Vacancy :  data.Vacancy,
         Criteria : data.Criteria,
         Description : data.Description,
-        CompanyId : req.user.id,
+        CompanyId : id,
         Package : data.Package,
         Position : data.Position
     })
@@ -21,7 +22,7 @@ else{
 }
 }
 
-module.exports.getJob = async function getJob(req,res){
+module.exports.getMyJobs = async function getMyJobs(req,res){
     // let CompanyId = localStorage.getItem('CompanyId');
     if(req.user.id){
         let resp = await JobModel.find({CompanyId:req.user.id});
@@ -33,8 +34,13 @@ module.exports.getJob = async function getJob(req,res){
 }
 
 module.exports.getJobs = async function getJobs(req,res){
-    let resp = await JobModel.find({});
+    let id = req.user.id;
+    console.log(id);
+    let data = await StudentModel.findById(id);
+    console.log(data);
+    const resp = await JobModel.find({Criteria:{$lte:data.SPI}});
     if(resp){
+        console.log(data);
         res.send({success:true,resp});
     }
     else{

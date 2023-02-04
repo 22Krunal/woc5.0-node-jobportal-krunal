@@ -32,6 +32,7 @@ const JobState = (props)=>{
       setalert(null);
     }, 3000);
   }
+  
     return(
         <JobContext.Provider value={{LoginS,LoginC,handleSubmitS,handleSubmitC,token,showAlert,alert}}>
             {props.children}

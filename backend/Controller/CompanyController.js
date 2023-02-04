@@ -15,11 +15,7 @@ module.exports.postCompany = async function postCompany (req,res){
         Password :data.Password,
     })
     console.log(resp);
-    const dataP={
-        user:{
-            id:resp.id
-        }
-    }
+    
     const authtoken =  authtokenfun(resp);
 
     if(resp){
@@ -47,11 +43,7 @@ module.exports.loginCompany = async function loginCompany(req,res){
     if(result){
     const passwordCompare= await bcrypt.compare(data.Password,result.Password);
         if(passwordCompare){
-            const dataP={
-                user:{
-                    id:result.id
-                }
-            }
+            
             const authtoken =  authtokenfun(result);
 
             // localStorage.setItem('CompanyId',result._id.valueOf());
@@ -117,8 +109,26 @@ module.exports.deleteCompany = async function deleteCompany(req,res){
 }
 
 module.exports.updateCompany = async function updateCompany(req,res){
+    let id = req.params.id;
+    let {Name,Address,Email} = req.body;
     try{
-
+        let resp = await CompanyModel.findById(id);
+        if(!resp){
+            res.status(404).json({success:false,message:"Not Found"});
+        }
+        let newData = {Name,Address,Email};
+        if(resp){
+            resp=await CompanyModel.findByIdAndUpdate(id,{$set:newData},{new:true});
+            if(resp){
+                res.status(200).json({success:true,message:"Successfully Updated",resp});
+            }
+            else{
+                res.status(401).json({success:false,message:"Error"});
+            }
+        }
+        else{
+            res.status(404).json({success:false,message:"Student Not Found"});
+        }
     }catch(error){
         console.log(error.message);
         res.status(500).json({success:false,message:"Internal Server Error"});

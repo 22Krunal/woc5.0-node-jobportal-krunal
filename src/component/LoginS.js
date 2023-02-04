@@ -14,8 +14,8 @@ const LoginS = () => {
     let url = 'http://localhost:5000/student/login';
     let response = await axios.post(url,{Email,Password})
     .then((response)=>{
+      console.log(response.data);
       if(response.data.success){
-      // console.log(response.data.authtoken);
       handleSubmitS('true',response.data.authtoken);
       showAlert('Successfully Logged In','success');
       navigate('/');

@@ -1,35 +1,63 @@
-import React,{useContext,useEffect,useState} from 'react'
+import React,{useContext,useEffect,useState,useRef} from 'react'
 import axios from 'axios';
 import JobContext from '../context/jobcontext/JobContext';
 import "./ProfileC.css"
 const ProfileC = () => {
-    const a = useContext(JobContext);
-    // const [user, setuser] = useState({eName:"",eEmail:"",eAddress:"",ePassword:""});
+    const {token,showAlert} = useContext(JobContext);
+    const [user, setuser] = useState({eName:"",eEmail:"",eAddress:""});
     const [name,setname] = useState("");
     const [email, setemail] = useState("");
     const [address, setaddress] = useState("");
+    const [id,setID] = useState('');
+    const fill = useRef(null);
+    async function getProfile(){
+      const url = 'http://localhost:5000/company';
+      const response = await axios.get(url,{headers:{'auth-token':token}});
+    console.log('hello inside');
+      console.log(response);
+      const resp = response.data.data;
+      // setuser({eName:resp.Name,eEmail:resp.Email,eAddress:resp.eAddress,ePassword:resp.Password});
+      setname(resp.Name);
+      setemail(resp.Email);
+      setaddress(resp.Address);
+      setID(resp._id);
+      setuser({eName:name,eEmail:email,eAddress:address});
+    }
 useEffect(() => {
-  async function getProfile(){
-    const url = 'http://localhost:5000/company';
-    const response = await axios.get(url,{headers:{'auth-token':a.token}});
-  console.log('hello inside');
-    console.log(response);
-    const resp = response.data.data;
-    // setuser({eName:resp.Name,eEmail:resp.Email,eAddress:resp.eAddress,ePassword:resp.Password});
-    setname(resp.Name);
-    setemail(resp.Email);
-    setaddress(resp.Address);
-  }
+ 
   console.log('hello');
   getProfile();
 }, [])
 const onChange=(event)=>{
-
-    setname(event.target.value);
-    // setuser({...user,[event.target.name]:event.target.value});
+  if(event.target.id==="eName")setname(event.target.value);
+  else if(event.target.id==="eemail")setemail(event.target.value);
+  else if(event.target.id==="eaddress")setaddress(event.target.value);
+  // else if(event.target.name==="eContact")setContact(event.target.value);
+  // else if(event.target.name==="eEmail")setEmail(event.target.value);
+  // else if(event.target.name==="eSpi")setSpi(event.target.value);
+  // else if(event.target.name==="eBatch")setBatch(event.target.value);
+  // else setAddress(event.target.value);
+  // setuser({...user,[event.target.name]:event.target.value});
+  //   setname(event.target.value);
+    setuser({...user,[event.target.name]:event.target.value});
 }
-const submit = (e)=>{
-    e.preventDefault();
+const submit = async(id)=>{
+    // e.preventDefault();
+    // let url = `http://localhost:5000/company/${id}`
+    console.log(id);
+  const url = `http://localhost:5000/company/${id}`
+  let object = {Name:name,Address:address,Email:email};
+  const response = await axios.put(url,object)
+  .then((response)=>{
+    if(response.data.success){
+      showAlert('Updated Successfully','success');
+      getProfile();
+      fill.current.click();
+    }
+  })
+  .catch((error)=>{
+    showAlert(error.data.message,'danger');
+  })
 }
   return (
     <>
@@ -87,23 +115,42 @@ const submit = (e)=>{
 </div>
 </div>
    <div>
-   <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Launch demo modal
+    <div className="col">
+   <button type="button" ref={fill} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Update
     </button>
-    
+    <button className='btn btn-danger mx-2'>Delete</button>
+    </div>
+
     <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 className="modal-title" id="exampleModalLabel">Update</h5>
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div className="modal-body">
-            ...
+          <div className="form-floating mb-3 ">
+    <input type="text" className="form-control" id="eName" value ={name} onChange={onChange} placeholder="name@example.com"/>
+    <label for="eName">Name</label>
+  </div> 
+      <div className="form-floating mb-3  ">
+    <input type="email" className="form-control" id="eemail" value = {email} onChange={onChange} placeholder="name@example.com"/>
+    <label for="eemail">Email address</label>
+  </div>
+  
+  <div className="form-floating mb-3  ">
+    <input type="password" className="form-control" id="epassword" placeholder="name@example.com"/>
+    <label for="epassword">Password</label>
+  </div>
+  <div className="form-floating mb-3  ">
+    <input type="email" className="form-control" id="eaddress" value={address} onChange={onChange} placeholder="name@example.com"/>
+    <label for="eaddress">Address</label>
+  </div>
           </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" className="btn btn-primary">Save changes</button>
+            <button type="button" className="btn btn-primary" onClick={()=>submit(id)}>Save changes</button>
           </div>
         </div>
       </div>
