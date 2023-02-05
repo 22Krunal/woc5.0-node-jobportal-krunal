@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-require('dotenv').config();
+// require('dotenv').config();
 // const db_link = 'mongodb+srv://:wyYTUlFQnm95kQA5@cluster0.9hnfgm9.mongodb.net/?retryWrites=true&w=majority'
 mongoose.connect(process.env.db_link)
 .then((db)=>{
