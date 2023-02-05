@@ -5,7 +5,7 @@ const studentRouter = require('./Router/StudentRouter');
 const companyRouter = require('./Router/companyRouter');
 const JobRouter = require('./Router/JobRouter');
 const cros = require('cors');
-require('dotenv').config();
+// require('dotenv').config();
 
 app.use(bodyParser.json());
 app.use(cros());
