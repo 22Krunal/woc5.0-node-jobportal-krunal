@@ -13,9 +13,9 @@ app.use('/student',studentRouter);
 app.use('/company',companyRouter);
 app.use('/job',JobRouter);
 
-if (app.get("env") === "production") {
-    app.use(enforce.HTTPS({ trustProtoHeader: true }));
- }
+// if (app.get("env") === "production") {
+//     app.use(enforce.HTTPS({ trustProtoHeader: true }));
+//  }
 
 const Port = process.env.Port || 5000;
 app.listen(Port,()=>{
