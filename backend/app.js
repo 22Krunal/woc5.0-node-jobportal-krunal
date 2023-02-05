@@ -5,7 +5,7 @@ const studentRouter = require('./Router/StudentRouter');
 const companyRouter = require('./Router/companyRouter');
 const JobRouter = require('./Router/JobRouter');
 const cros = require('cors');
-
+require('dotenv').config();
 
 app.use(bodyParser.json());
 app.use(cros());
@@ -17,7 +17,8 @@ if (app.get("env") === "production") {
     app.use(enforce.HTTPS({ trustProtoHeader: true }));
  }
 
-app.listen(5000,()=>{
+const Port = process.env.Port || 5000;
+app.listen(Port,()=>{
     console.log('Server is Listing at port 5000');
 })
 

@@ -33,9 +33,9 @@ useEffect((()=>{
     </button>
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-        <li className="nav-item">
+        {(!LoginC&&!LoginS)&&<li className="nav-item">
           <Link className="navbar-brand" to="/">Home</Link>
-        </li>
+        </li>}
         {!(LoginS)?<></>:
         <>
         <li className="nav-item">
@@ -44,6 +44,9 @@ useEffect((()=>{
         <li className="nav-item">
           <Link className="navbar-brand" to="/student/Profile">Profile</Link>
         </li>
+        <li className="nav-item">
+        <Link className="navbar-brand" to="/password">ChangePassword</Link>
+      </li>
         <li className="nav-item">
           <button className='btn btn-outline-primary' onClick={sub}>LogOut</button>
         </li>
@@ -59,6 +62,9 @@ useEffect((()=>{
       </li>
       <li className="nav-item">
         <Link className="navbar-brand" to="/company/Profile">Profile</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="navbar-brand" to="/password">Change Password</Link>
       </li>
       <li className="nav-item">
         <button className='btn btn-outline-primary' onClick={sub}>LogOut</button>

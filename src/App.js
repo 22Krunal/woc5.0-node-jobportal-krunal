@@ -13,6 +13,7 @@ import ProfileC from "./component/ProfileC";
 import ProfileS from "./component/ProfileS";
 import Alert from "./component/Alert";
 import Recruitment from "./component/Recruitment";
+import ChangePassword from "./component/ChangePassword";
 
 function App() {
 
@@ -51,6 +52,9 @@ function App() {
     </Routes>
     <Routes>
         <Route path="/myJobs" element={<Recruitment/>} />
+    </Routes>
+    <Routes>
+        <Route path="/password" element={<ChangePassword/>} />
     </Routes>
     </div>
     </JobState>

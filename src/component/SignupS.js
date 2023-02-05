@@ -36,7 +36,7 @@ console.log({FirstName,MiddleName,LastName,Email,Contact,Id,Address,Batch,Spi,Pa
             
   }
   return (
-    <div className="card container my-5" style={{width: "40rem"}}>
+    <div className="card container my-5 shadow-lg p-3 mb-5 bg-light rounded" style={{width: "40rem"}}>
       <div className="card-body">
       <h2 className="card-title">Student Register</h2>
       <div className="row g-3">
@@ -81,7 +81,7 @@ console.log({FirstName,MiddleName,LastName,Email,Contact,Id,Address,Batch,Spi,Pa
     <input type="number" className="form-control" id="spi" min='0' max='10'placeholder="Password"/>
     <label for="spi">Spi</label>
   </div>
-  <button className='btn btn-info my-2' onClick={sub}>Submit</button>
+  <button className='btn btn-info my-2' style={{marginTop:'5rem'}} onClick={sub}>Submit</button>
   </div>
   </div>
   )

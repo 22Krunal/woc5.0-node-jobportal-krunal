@@ -2,14 +2,17 @@ import React,{useContext,useEffect,useState,useRef} from 'react'
 import axios from 'axios';
 import JobContext from '../context/jobcontext/JobContext';
 import "./ProfileC.css"
+import { useNavigate } from 'react-router-dom';
 const ProfileC = () => {
-    const {token,showAlert} = useContext(JobContext);
+    const {token,showAlert,handleSubmitC} = useContext(JobContext);
     const [user, setuser] = useState({eName:"",eEmail:"",eAddress:""});
     const [name,setname] = useState("");
     const [email, setemail] = useState("");
     const [address, setaddress] = useState("");
     const [id,setID] = useState('');
     const fill = useRef(null);
+    const navigate = useNavigate();
+    
     async function getProfile(){
       const url = 'http://localhost:5000/company';
       const response = await axios.get(url,{headers:{'auth-token':token}});
@@ -59,6 +62,22 @@ const submit = async(id)=>{
     showAlert(error.data.message,'danger');
   })
 }
+
+
+const handleDelete = async(id) =>{
+  const url = `http://localhost:5000/company/${id}`;
+  const response = await axios.delete(url,{headers:{'auth-token':token}})
+  .then((response)=>{
+    if(response.data.success){
+      showAlert('Deleted Successfully','success');
+      handleSubmitC('','');
+      navigate('/');
+    }
+  })
+  .catch((error)=>{
+    showAlert(error.data.message,'danger');
+  });
+}
   return (
     <>
     <div className="page-content page-container mx-5" id="page-content">
@@ -73,7 +92,6 @@ const submit = async(id)=>{
                   <img src="https://img.icons8.com/bubbles/100/000000/user.png" className="img-radius" alt="User-Profile-Image"/>
                 </div>
                 <h6 className="f-w-600">{name}</h6>
-                <p>Web Designer</p>
                 <i className=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
             </div>
         </div>
@@ -90,22 +108,6 @@ const submit = async(id)=>{
                         <h6 className="text-muted f-w-400">{address}</h6>
                     </div>
                 </div>
-                {/* <h6 className="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
-                    <div className="row">
-                        <div className="col-sm-6">
-                            <p className="m-b-10 f-w-600">Recent</p>
-                            <h6 className="text-muted f-w-400">Sam Disuja</h6>
-                        </div>
-                        <div className="col-sm-6">
-                            <p className="m-b-10 f-w-600">Most Viewed</p>
-                            <h6 className="text-muted f-w-400">Dinoter husainm</h6>
-                        </div>
-                    </div> */}
-                    {/* <ul className="social-link list-unstyled m-t-40 m-b-10">
-                        <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="facebook" data-abc="true"><i className="mdi mdi-facebook feather icon-facebook facebook" aria-hidden="true"></i></a></li>
-                        <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="twitter" data-abc="true"><i className="mdi mdi-twitter feather icon-twitter twitter" aria-hidden="true"></i></a></li>
-                        <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="instagram" data-abc="true"><i className="mdi mdi-instagram feather icon-instagram instagram" aria-hidden="true"></i></a></li>
-                    </ul> */}
                 </div>
             </div>
         </div>
@@ -119,7 +121,7 @@ const submit = async(id)=>{
    <button type="button" ref={fill} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
       Update
     </button>
-    <button className='btn btn-danger mx-2'>Delete</button>
+    <button className='btn btn-danger mx-2' onClick={()=>handleDelete(id)}>Delete</button>
     </div>
 
     <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -139,10 +141,7 @@ const submit = async(id)=>{
     <label for="eemail">Email address</label>
   </div>
   
-  <div className="form-floating mb-3  ">
-    <input type="password" className="form-control" id="epassword" placeholder="name@example.com"/>
-    <label for="epassword">Password</label>
-  </div>
+
   <div className="form-floating mb-3  ">
     <input type="email" className="form-control" id="eaddress" value={address} onChange={onChange} placeholder="name@example.com"/>
     <label for="eaddress">Address</label>

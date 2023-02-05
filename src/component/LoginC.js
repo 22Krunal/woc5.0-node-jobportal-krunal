@@ -17,17 +17,15 @@ const LoginC = () => {
       // console.log(response.data.authtoken);
       handleSubmitC('true',response.data.authtoken);
       showAlert('Successfully Logged In','success');
-      navigate('/');
+      navigate('/company/Profile');
     }})
     .catch((err)=>{
         showAlert(err.response.data.message,'danger');
         console.log('error');
     });
-    
-    
   }
   return (
-    <div className="card container my-5" style={{width: "25rem"}}>
+    <div className="card container my-5 shadow-lg p-3 mb-5 bg-light rounded" style={{width: "25rem"}}>
       <div className="card-body">
       <h2 className="card-title">Company Login</h2>
       <div className="form-floating mb-3 ">
@@ -38,7 +36,7 @@ const LoginC = () => {
     <input type="password" className="form-control" id="password" placeholder="Password"/>
     <label for="password">Password</label>
   </div>
-  <button className='btn btn-outline-info' onClick={submit}>Login</button>
+  <button className='btn btn-outline-info'style={{marginTop:"2rem"}} onClick={submit}>Login</button>
   </div>
   </div>
   )

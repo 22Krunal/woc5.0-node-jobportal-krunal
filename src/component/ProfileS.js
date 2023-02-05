@@ -3,7 +3,7 @@ import axios from 'axios'
 import JobContext from '../context/jobcontext/JobContext';
 import { useNavigate } from 'react-router-dom';
 const ProfileS = () => {
-  const {token,showAlert} = useContext(JobContext);
+  const {token,showAlert,handleSubmitS} = useContext(JobContext);
   const [user, setuser] = useState({eFirstName:"",eMiddleName:"",eLastName:"",eAddress:"",eContact:"",eSpi:"",eBatch:"",eEmail:""});
   const [FirstName, setFirstName] = useState('');
   const [MiddleName, setMiddleName] = useState('');
@@ -89,6 +89,7 @@ const handleDelete = async(id) =>{
   .then((response)=>{
     if(response.data.success){
       showAlert('Deleted Successfully','success');
+      handleSubmitS('','');
       navigate('/');
     }
   })

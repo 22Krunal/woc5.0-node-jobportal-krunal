@@ -86,10 +86,12 @@ module.exports.loginStudent = async function loginStudent (req,res){
     let data = req.body;
     try{
         let result = await StudentModel.findOne({email:data.Email});
-        console.log(result);
+        // console.log(result);
         if(!result){
-            res.stauts(404).json({success:false,message:"Email is not registered"});
+            res.status(404).json({success:false,message:"Email is Not Registered"});
+            res.end();
         }
+     
         if(result){
             const flag = await bcrypt.compare(data.Password,result.password);
             if(flag){
@@ -100,6 +102,8 @@ module.exports.loginStudent = async function loginStudent (req,res){
                 res.status(401).json({success:false,message : "Password dosen't match"});
             }
         }
+        
+
         
     }
     catch(error){
@@ -133,4 +137,35 @@ module.exports.updateStudent = async function updateStudent(req,res){
         res.status(500).json({success:false,message:"Internal Server Error"});
     }
 
+}
+
+module.exports.updatePassword = async function updatePassword(req,res){
+    let id = req.user.id;
+    let {oldPassword,Password} = req.body;
+    console.log(oldPassword,Password,id);
+    try{
+        let resp = await StudentModel.findById(id);
+        if(!resp){
+            res.status(404).json({success:false,message:"Not Found"});
+        }
+        const flag = await bcrypt.compare(oldPassword,resp.password);
+        
+        let newData = {password:Password};
+        if(flag){
+       let response=await StudentModel.findByIdAndUpdate(id,{$set:{"password":Password}},{new:true});
+            if(response){
+                res.status(200).json({success:true,message:"Successfully Updated",response});
+            }
+            else{
+                res.status(401).json({success:false,message:"Error"});
+            }
+        }
+        else{
+            res.status(400).json({success:false,message:"Password is Incorrect"});
+            res.end();
+        }
+    }
+    catch(error){
+        res.status(500).json({success:false,message:"Internal Server Error"});
+    }
 }

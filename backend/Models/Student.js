@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-
-const db_link = 'mongodb+srv://admin:wyYTUlFQnm95kQA5@cluster0.9hnfgm9.mongodb.net/?retryWrites=true&w=majority';
-mongoose.connect(db_link)
+require('dotenv').config();
+// const db_link = 'mongodb+srv://:wyYTUlFQnm95kQA5@cluster0.9hnfgm9.mongodb.net/?retryWrites=true&w=majority'
+mongoose.connect(process.env.db_link)
 .then((db)=>{
-    // console.log(db);
+    // console.log(process.env.db_link);
     console.log('database connected succefully!!!!');
 })
 .catch((err)=>{

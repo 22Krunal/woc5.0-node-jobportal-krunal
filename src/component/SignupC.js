@@ -29,7 +29,7 @@ const SignupC = () => {
 
   }
   return (
-    <div className="card container my-5" style={{width: "40rem"}}>
+    <div className="card container my-5 shadow-lg p-3 mb-5 bg-light rounded" style={{width: "40rem"}}>
       <div className="card-body">
       <h2 className="card-title">Company Register</h2>
       <div className="form-floating mb-3 ">
@@ -49,7 +49,7 @@ const SignupC = () => {
     <input type="email" className="form-control" id="address" placeholder="name@example.com"/>
     <label for="address">Address</label>
   </div>
-  <button className='btn btn-info my-2' onClick={sub}>Submit</button>
+  <button className='btn btn-info my-2'style={{marginTop:'5rem'}} onClick={sub}>Submit</button>
   </div>
   </div>
   )

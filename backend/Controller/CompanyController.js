@@ -90,20 +90,26 @@ module.exports.getMyCompany = async function getMyCompany(req,res){
         res.status(500).json({success:false,message:"Internal Server Error"});
     }
 }
-module.exports.deleteCompany = async function deleteCompany(req,res){
+module.exports.deleteCompany = async function deleteCompany (req,res){
     let id = req.params.id;
+    let user = req.user.id;
+    // let result = await StudentModel.findOneAndRemove({email:data.Email});
+    // res.json({suceess:true,result,message:"User deleted successfully!!!"});
     try{
-    // let email = req.body.Email;
-    let data = await CompanyModel.findById(id);
-    if(data){
-        res.status(200).json({success:true,message:"Company is Deleted Successfully"});
+        let response = await CompanyModel.findById(id);
+        if(!response){
+            res.status(404).json({success:false,message:"Not Found"});
+        }
+        console.log("this is my profile",response,response.id.toString());
+        if(response.id.toString()!=user){
+            res.status(401).json({success:false,message:"Not Allowed To Perfrom this Action"});
+        }
+        let resp = await CompanyModel.findByIdAndDelete(id);
+        if(resp){
+            res.status(200).json({success:true,message:"Deleted Successfully"});
+        }
     }
-    else{
-        res.status(404).json({success:false,message:"Not Found"});
-    }
-
-    }catch(error){
-        console.log(error.message);
+    catch(error){
         res.status(500).json({success:false,message:"Internal Server Error"});
     }
 }
@@ -133,4 +139,36 @@ module.exports.updateCompany = async function updateCompany(req,res){
         console.log(error.message);
         res.status(500).json({success:false,message:"Internal Server Error"});
     }
+}
+
+
+module.exports.updatePassword = async function updatePassword(req,res){
+    let id = req.user.id;
+    let {oldPassword,Password} = req.body;
+    console.log(oldPassword,Password,id);
+    try{
+        let resp = await CompanyModel.findById(id);
+        if(!resp){
+            res.status(404).json({success:false,message:"Not Found"});
+        }
+        const flag = await bcrypt.compare(oldPassword,resp.Password);
+        
+        let newData = {password:Password};
+        if(flag){
+       let response=await CompanyModel.findByIdAndUpdate(id,{$set:{"Password":Password}},{new:true});
+            if(response){
+                res.status(200).json({success:true,message:"Successfully Updated",response});
+            }
+            else{
+                res.status(401).json({success:false,message:"Error"});
+            }
+        }
+        else{
+            res.status(400).json({success:false,message:"Password is Incorrect"});
+            res.end();
+        }
+    }
+    catch(error){
+        res.status(500).json({success:false,message:"Internal Server Error"});
+    }   
 }
