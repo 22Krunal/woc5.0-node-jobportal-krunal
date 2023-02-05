@@ -1,36 +1,13 @@
 import axios from 'axios';
 import React, { useContext } from 'react'
-import { useNavigate } from 'react-router-dom';
 import JobContext from '../context/jobcontext/JobContext';
 
 const ChangePassword = () => {
-    const {token,showAlert,LoginC,LoginS} = useContext(JobContext);
-    const navigate = useNavigate();
+    const {changePassword} = useContext(JobContext);
     const handleSubmit = async()=>{
         let oldPassword = document.getElementById('oldPassword').value;
         let newPassword = document.getElementById('newPassword').value;
-        let api = "";
-        if(LoginC){
-            api = 'company';
-            console.log("Hello there");
-        }
-        else{
-            api = 'student';
-        }
-        let url = `http://localhost:5000/${api}/password`;
-        let rep = await axios.put(url,{oldPassword,Password:newPassword},{headers:{'auth-token':token}})
-        .then((response)=>{
-            if(response.data.success){
-                showAlert('Password Changed Successfully','success');
-                let nav = `/${api}/Profile`
-                navigate(nav);
-            }
-            
-        })
-        .catch((error)=>{
-            console.log(error.response.data.message);
-            showAlert(error.response.data.message,'danger');
-        });
+        changePassword({oldPassword,newPassword});
     }
   return (
     <div className="card container my-5" style={{width: "25rem"}}>

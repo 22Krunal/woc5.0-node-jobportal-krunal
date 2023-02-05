@@ -1,31 +1,16 @@
 import React,{useContext} from 'react'
-import axios from 'axios';
-import {  useNavigate } from 'react-router-dom';
 import JobContext from '../context/jobcontext/JobContext';
 const LoginS = () => {
-  const {handleSubmitS,showAlert,loginStudent} = useContext(JobContext);
-  const navigate = useNavigate();
+  const {loginStudent} = useContext(JobContext);
 
 
   let handleLogin = async function login(e){
     e.preventDefault();
     let Email = document.getElementById('email').value;
     let Password = document.getElementById('password').value;
-    // let url = 'http://localhost:5000/student/login';
-    // let response = await axios.post(url,{Email,Password})
-    // .then((response)=>{
-    //   console.log(response.data);
-    //   if(response.data.success){
-    //   handleSubmitS('true',response.data.authtoken);
-    //   showAlert('Successfully Logged In','success');
-    //   navigate('/student/Profile');
-    // }})
-    // .catch((err)=>{
-    //     showAlert(err.response.data.message,'danger');
-    //     console.log('error');
-    // });
     loginStudent({Email,Password});
   }
+  
   return (
     <div className="card container my-5 shadow-lg p-3 mb-5 bg-light rounded" style={{width: "25rem"}}>
       <div className="card-body">

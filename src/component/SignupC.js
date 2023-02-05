@@ -3,17 +3,16 @@ import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
 import JobContext from '../context/jobcontext/JobContext'
 const SignupC = () => {
-  const {handleSubmitC,showAlert} = useContext(JobContext);
+  const {handleSubmitC,showAlert,BaseUrl} = useContext(JobContext);
   const navigate = useNavigate();
   let sub = async function handleSubmit(e){
-    console.log('hello what is happening')
     e.preventDefault();
       let Name = document.getElementById('Name').value;
       let Address = document.getElementById('address').value;
       let Email = document.getElementById('email').value;
       let Password = document.getElementById('password').value;
       
-      const url = 'http://localhost:5000/company/signup';
+      const url = `${BaseUrl}/company/signup`;
       let response = await axios.post(url,{Name,Address,Email,Password})
       .then((response)=>{
         if(response.data.success){

@@ -1,28 +1,12 @@
 import React,{useContext} from 'react'
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import JobContext from '../context/jobcontext/JobContext';
 const LoginC = () => {
-  const {handleSubmitC,showAlert} = useContext(JobContext);
-  const navigate = useNavigate();
+  const {loginCompany} = useContext(JobContext);
   const submit = async function (e){
     e.preventDefault();
     let Email = document.getElementById('email').value;
     let Password = document.getElementById('password').value;
-    
-    const url = 'http://localhost:5000/company/login'
-    let response = await axios.post(url,{Email,Password})
-    .then((response)=>{
-      if(response.data.success){
-      // console.log(response.data.authtoken);
-      handleSubmitC('true',response.data.authtoken);
-      showAlert('Successfully Logged In','success');
-      navigate('/company/Profile');
-    }})
-    .catch((err)=>{
-        showAlert(err.response.data.message,'danger');
-        console.log('error');
-    });
+    loginCompany({Email,Password});
   }
   return (
     <div className="card container my-5 shadow-lg p-3 mb-5 bg-light rounded" style={{width: "25rem"}}>

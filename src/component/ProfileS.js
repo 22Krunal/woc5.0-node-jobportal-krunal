@@ -3,7 +3,7 @@ import axios from 'axios'
 import JobContext from '../context/jobcontext/JobContext';
 import { useNavigate } from 'react-router-dom';
 const ProfileS = () => {
-  const {token,showAlert,handleSubmitS} = useContext(JobContext);
+  const {token,showAlert,handleSubmitS,BaseUrl} = useContext(JobContext);
   const [user, setuser] = useState({eFirstName:"",eMiddleName:"",eLastName:"",eAddress:"",eContact:"",eSpi:"",eBatch:"",eEmail:""});
   const [FirstName, setFirstName] = useState('');
   const [MiddleName, setMiddleName] = useState('');
@@ -17,7 +17,7 @@ const ProfileS = () => {
   const navigate = useNavigate();
    const fill = useRef(null);
    async function getProfile(){
-    const url = 'http://localhost:5000/student';
+    const url = `${BaseUrl}/student`;
     const response = await axios.get(url,{headers:{'auth-token':token}})
     .then((response)=>{
     console.log('hello inside');
@@ -67,7 +67,7 @@ const handlechange=(event)=>{
 }
 const handleSubmit = async(id) =>{
   console.log(id);
-  const url = `http://localhost:5000/student/${id}`
+  const url = `${BaseUrl}/student/${id}`
   let object = {FirstName,MiddleName,LastName,SPI:Spi,Batch,Contact,Address,email:Email};
   const response = await axios.put(url,object)
   .then((response)=>{
@@ -84,7 +84,7 @@ const handleSubmit = async(id) =>{
 }
 
 const handleDelete = async(id) =>{
-  const url = `http://localhost:5000/student/${id}`;
+  const url = `${BaseUrl}/student/${id}`;
   const response = await axios.delete(url,{headers:{'auth-token':token}})
   .then((response)=>{
     if(response.data.success){

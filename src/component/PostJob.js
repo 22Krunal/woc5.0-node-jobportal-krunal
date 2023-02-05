@@ -1,29 +1,20 @@
-import React from 'react'
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react'
+import JobContext from '../context/jobcontext/JobContext';
 
 
 
 const PostJob = () => {
-  const navigate = useNavigate();
+  const {postJob} = useContext(JobContext);
   const sub = async function(e){
     e.preventDefault();
-    let token = localStorage.getItem('token');
-    const url = 'http://localhost:5000/job';
+    
     const Description = document.getElementById('Description').value;
     const Vacancy = document.getElementById('Vacancy').value;
     const Criteria = document.getElementById('Criteria').value;
     const Package = document.getElementById('Package').value;
     const Position = document.getElementById('Position').value;
-    console.log({Description,Vacancy,Criteria,Package,Position});
-    const response = await axios.post(url,{Description,Vacancy,Criteria,Package,Position},{headers:{
-      'Content-Type':'application/json',
-      'auth-token':token,
-    }});
-    if(response){
-      console.log("great");
-      navigate('/myJobs');
-    }
+
+    postJob({Description,Vacancy,Criteria,Package,Position});
   };
   return (
     <div className="card container my-5" style={{width: "40rem"}}>

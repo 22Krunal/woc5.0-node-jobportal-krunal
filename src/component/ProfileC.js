@@ -4,7 +4,7 @@ import JobContext from '../context/jobcontext/JobContext';
 import "./ProfileC.css"
 import { useNavigate } from 'react-router-dom';
 const ProfileC = () => {
-    const {token,showAlert,handleSubmitC} = useContext(JobContext);
+    const {token,showAlert,handleSubmitC,BaseUrl} = useContext(JobContext);
     const [user, setuser] = useState({eName:"",eEmail:"",eAddress:""});
     const [name,setname] = useState("");
     const [email, setemail] = useState("");
@@ -14,12 +14,11 @@ const ProfileC = () => {
     const navigate = useNavigate();
     
     async function getProfile(){
-      const url = 'http://localhost:5000/company';
+      const url = `${BaseUrl}/company`;
       const response = await axios.get(url,{headers:{'auth-token':token}});
-    console.log('hello inside');
+    // console.log('hello inside');
       console.log(response);
       const resp = response.data.data;
-      // setuser({eName:resp.Name,eEmail:resp.Email,eAddress:resp.eAddress,ePassword:resp.Password});
       setname(resp.Name);
       setemail(resp.Email);
       setaddress(resp.Address);
@@ -28,27 +27,18 @@ const ProfileC = () => {
     }
 useEffect(() => {
  
-  console.log('hello');
+  // console.log('hello');
   getProfile();
 }, [])
 const onChange=(event)=>{
   if(event.target.id==="eName")setname(event.target.value);
   else if(event.target.id==="eemail")setemail(event.target.value);
   else if(event.target.id==="eaddress")setaddress(event.target.value);
-  // else if(event.target.name==="eContact")setContact(event.target.value);
-  // else if(event.target.name==="eEmail")setEmail(event.target.value);
-  // else if(event.target.name==="eSpi")setSpi(event.target.value);
-  // else if(event.target.name==="eBatch")setBatch(event.target.value);
-  // else setAddress(event.target.value);
-  // setuser({...user,[event.target.name]:event.target.value});
-  //   setname(event.target.value);
+
     setuser({...user,[event.target.name]:event.target.value});
 }
 const submit = async(id)=>{
-    // e.preventDefault();
-    // let url = `http://localhost:5000/company/${id}`
-    console.log(id);
-  const url = `http://localhost:5000/company/${id}`
+  const url = `${BaseUrl}/company/${id}`
   let object = {Name:name,Address:address,Email:email};
   const response = await axios.put(url,object)
   .then((response)=>{
@@ -65,7 +55,7 @@ const submit = async(id)=>{
 
 
 const handleDelete = async(id) =>{
-  const url = `http://localhost:5000/company/${id}`;
+  const url = `${BaseUrl}/company/${id}`;
   const response = await axios.delete(url,{headers:{'auth-token':token}})
   .then((response)=>{
     if(response.data.success){

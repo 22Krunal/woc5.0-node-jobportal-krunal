@@ -1,8 +1,7 @@
 import React  from "react";
 
 const Job = (props) => {
-    // console.log(props.data);
-    // const a = useContext(JobContext);
+    
     
   return (
     <div className="card my-2" >

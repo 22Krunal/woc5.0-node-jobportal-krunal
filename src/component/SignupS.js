@@ -1,12 +1,8 @@
 import React,{useContext} from 'react'
-import axios from 'axios'
-import {  useNavigate } from 'react-router-dom'
 import JobContext from '../context/jobcontext/JobContext'
 const SignupS = () => {
-  const {handleSubmitS,showAlert} = useContext(JobContext);
-  const navigate = useNavigate();
+  const {RegisterStudent} = useContext(JobContext);
   let sub = async function handleSubmit(e){
-    // console.log('hello',document.getElementById('fn').value);
     e.preventDefault();
     let FirstName = document.getElementById('FirstName').value;
     let LastName = document.getElementById('LastName').value;
@@ -18,22 +14,7 @@ const SignupS = () => {
     let Batch = document.getElementById('batch').value;    
     let Spi = document.getElementById('spi').value;
     let Password = document.getElementById('password').value;
-console.log({FirstName,MiddleName,LastName,Email,Contact,Id,Address,Batch,Spi,Password});
-
-  let url = 'http://localhost:5000/student/signup';
-            let response = await axios.post(url,{FirstName,MiddleName,LastName,Email,Contact,Id,Address,Batch,Spi,Password})
-            .then((response)=>{
-              if(response.data.success){
-              console.log(response.data.authtoken);
-              handleSubmitS('true',response.data.authtoken);
-              showAlert('Successfully Logged In','success');
-              navigate('/');
-            }})
-            .catch((err)=>{
-                showAlert(err.response.data.message,'danger');
-                console.log('error');
-            });
-            
+    RegisterStudent({FirstName,LastName,MiddleName,Email,Contact,Id,Address,Batch,Spi,Password});    
   }
   return (
     <div className="card container my-5 shadow-lg p-3 mb-5 bg-light rounded" style={{width: "40rem"}}>
